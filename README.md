@@ -12,6 +12,6 @@ slackにスロー
 - firestoreのdataURL
 - slackのincoming webhookのパスワード設定
 - タグ16個を4人で回すために、for文の中身のindexを変化
-(わき…0~3,うっち…4~7,すだめ…8~11,Prof…12~15)
+(わき…0～3,うっち…4～7,すだめ…8～11,Prof…12～15)
 
 
