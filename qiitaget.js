@@ -1,26 +1,24 @@
-const axios = require('axios');
+ const axios = require('axios');
 
 //タグは16個(1人4人)
-var tagsample = ["python","javascript","ruby","php","rails","ios","aws","android","java","swift","html","css","linux","github","vue.js","c"];
+    var tagsample = ["python", "javascript", "ruby", "php", "rails", "ios", "aws", "android", "java", "swift", "html", "css", "linux", "github", "vue.js", "c"];
 
 //qiitaAPI
-const request_qiita = axios.create({
-    baseURL: 'https://qiita.com/api/v2/'
-});
+    const request_qiita = axios.create({
+        baseURL: 'https://qiita.com/api/v2/'
+    });
 
 //firestore初期設定
-var admin = require('firebase-admin');
-var serviceAccount = require(/*秘密鍵のパス*/);
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: /*firestoreのURL*/
-});
-var db = admin.firestore();
+    var admin = require('firebase-admin');
+    var serviceAccount = require("./qiitafeedal.json");
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: ""
+    });
+    var db = admin.firestore();
 
-//30分毎に実行。
-setInterval(function(){
-    get_sprint();
-}, 1800000);
+    const qiita_oauth_pass = "";
+
 
 get_sprint();
 
@@ -32,7 +30,7 @@ function get_sprint() {
     for (let i = 0; i <4 ; i++) {
 
         //per_pageで取得記事変化
-        request_qiita.get('tags/' + tagsample[i] + '/items?pages=1&per_page=50')
+        request_qiita.get('tags/' + tagsample[i] + '/items?pages=1&per_page=50','Authorization: Bearer '+qiita_oauth_pass)
             .then(res => {
                 var hash = res.data;
                 //それぞれのタグの記事のいいね数を取得
@@ -87,7 +85,7 @@ function get_sprint() {
 //slackにスローするfunction
 function slack_throw(text_slack) {
 
-    const url = "/*slackのURL*/ ";
+    const url = "";
 
     axios.post(
         url,
